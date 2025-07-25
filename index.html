@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>测试页面</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="products.html">商品</a></li>
+                    <li><a href="cart.html">购物车</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                    <li id="user-info" style="display: none;"><span id="username"></span> <a href="#" onclick="logout()">退出</a></li>
+                    <li id="login-link"><a href="login.html">登录</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h2>特色商品推荐</h2>
+            <div id="featured-products" class="product-grid">
+                <!-- 动态加载推荐商品 -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>祝生活愉快</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

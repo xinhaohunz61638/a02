@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>商品管理</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">商品</a></li>
+                    <li><a href="cart.html">购物车</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                    <li><a href="management.html" class="active">管理</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="admin-section">
+            <h2>商品管理</h2>
+            
+            <!-- 登录表单 -->
+            <div id="login-form" class="product-form">
+                <h3>管理员登录</h3>
+                <form id="admin-login">
+                    <div class="form-group">
+                        <label for="username">用户名:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit">登录</button>
+                </form>
+            </div>
+            
+            <!-- 商品管理界面 -->
+            <div id="management-panel" style="display: none;">
+                <div style="text-align: right; margin-bottom: 1rem;">
+                    <button onclick="logout()">退出登录</button>
+                </div>
+                <!-- 添加/编辑商品表单 -->
+                <div class="product-form">
+                    <h3 id="form-title">添加新商品</h3>
+                    <form id="product-form">
+                        <input type="hidden" id="product-id">
+                        <div class="form-group">
+                        <label for="product-name">商品名称:</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">商品描述:</label>
+                        <textarea id="product-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">价格:</label>
+                        <input type="number" id="product-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image">图片路径:</label>
+                        <input type="text" id="product-image">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-tags">标签 (用逗号分隔):</label>
+                        <input type="text" id="product-tags">
+                    </div>
+                    <button type="submit">保存商品</button>
+                    <button type="button" id="cancel-btn">取消</button>
+                </form>
+            </div>
+            
+            <!-- 订单管理标签 -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'products')" id="defaultOpen">商品管理</button>
+                <button class="tablinks" onclick="openTab(event, 'orders')">订单管理</button>
+            </div>
+
+            <!-- 商品列表 -->
+            <div id="products" class="tabcontent">
+                <h3>商品列表</h3>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="搜索商品...">
+                    <button id="search-btn">搜索</button>
+                    <button id="clear-search-btn">清空</button>
+                </div>
+                <div id="products-container" class="product-grid">
+                    <!-- 商品将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 订单管理界面 -->
+        <div id="orders" class="tabcontent" style="display: none;">
+            <h3>订单列表</h3>
+            <div id="orders-container">
+                <!-- 订单将通过JavaScript动态加载 -->
+            </div>
+        </div>
+    </section>
+</main>
+    
+    <footer>
+        <div class="container">
+            <p>祝生活愉快</p>
+        </div>
+    </footer>
+    
+    <script src="js/management.js"></script>
+</body>
+</html>

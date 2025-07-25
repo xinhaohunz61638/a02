@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #005a87;
+        }
+        .response {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        .success {
+            border-color: green;
+            background-color: #d4edda;
+        }
+        .error {
+            border-color: red;
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <h1>API测试页面</h1>
+    
+    <div class="test-section">
+        <h2>购物车API测试</h2>
+        <button onclick="testGetCart()">获取购物车</button>
+        <button onclick="testAddToCart()">添加商品到购物车</button>
+        <button onclick="testRemoveFromCart()">从购物车移除商品</button>
+        <div id="cart-response" class="response"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>产品API测试</h2>
+        <button onclick="testGetProducts()">获取所有产品</button>
+        <div id="products-response" class="response"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>订单API测试</h2>
+        <button onclick="testCreateOrder()">创建订单</button>
+        <div id="orders-response" class="response"></div>
+    </div>
+    
+    <script>
+        // 显示响应结果
+        function displayResponse(elementId, data, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = JSON.stringify(data, null, 2);
+            element.className = 'response ' + (isSuccess ? 'success' : 'error');
+        }
+        
+        // 测试获取购物车
+        function testGetCart() {
+            fetch('api/cart.php')
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('服务器返回了无效的响应格式');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResponse('cart-response', data, data.success);
+                })
+                .catch(error => {
+                    displayResponse('cart-response', {error: error.message}, false);
+                });
+        }
+        
+        // 测试添加商品到购物车
+        function testAddToCart() {
+            fetch('api/cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product_id: 1,
+                    quantity: 1
+                })
+            })
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('服务器返回了无效的响应格式');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResponse('cart-response', data, data.success);
+                })
+                .catch(error => {
+                    displayResponse('cart-response', {error: error.message}, false);
+                });
+        }
+        
+        // 测试从购物车移除商品
+        function testRemoveFromCart() {
+            fetch('api/cart.php', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product_id: 1
+                })
+            })
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('服务器返回了无效的响应格式');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResponse('cart-response', data, data.success);
+                })
+                .catch(error => {
+                    displayResponse('cart-response', {error: error.message}, false);
+                });
+        }
+        
+        // 测试获取产品
+        function testGetProducts() {
+            fetch('api/products.php')
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('服务器返回了无效的响应格式');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResponse('products-response', data, data.success);
+                })
+                .catch(error => {
+                    displayResponse('products-response', {error: error.message}, false);
+                });
+        }
+        
+        // 测试创建订单
+        function testCreateOrder() {
+            fetch('api/orders.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cart: [
+                        {product_id: 1, quantity: 1},
+                        {product_id: 2, quantity: 2}
+                    ]
+                })
+            })
+                .then(response => {
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('服务器返回了无效的响应格式');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResponse('orders-response', data, data.success);
+                })
+                .catch(error => {
+                    displayResponse('orders-response', {error: error.message}, false);
+                });
+        }
+    </script>
+</body>
+</html>

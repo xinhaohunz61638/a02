@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>联系我们</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">商品</a></li>
+                    <li><a href="cart.html">购物车</a></li>
+                    <li><a href="contact.html" class="active">联系我们</a></li>
+                    <li id="user-info" style="display: none;"><span id="username"></span> <a href="#" onclick="logout()">退出</a></li>
+                    <li id="login-link"><a href="login.html">登录</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="contact-section">
+            <h2>我们的联系信息</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>地址</h3>
+                    <p>北京市朝阳区某某街道123号</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>电话</h3>
+                    <p>+86 138 0000 0000</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>邮箱</h3>
+                    <p>info@example.com</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>工作时间</h3>
+                    <p>周一至周五: 9:00 - 18:00</p>
+                    <p>周六: 10:00 - 16:00</p>
+                    <p>周日: 休息</p>
+                </div>
+            </div>
+            
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>祝生活愉快</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 处理表单提交
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // 在实际应用中，这里会将数据发送到服务器
+            console.log('表单数据:', { name, email, subject, message });
+            
+            // 显示成功消息
+            alert('感谢您的消息！我们会尽快回复您。');
+            
+            // 重置表单
+            this.reset();
+        });
+    </script>
+</body>
+</html>

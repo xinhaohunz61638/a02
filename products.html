@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>我们的商品</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html" class="active">商品</a></li>
+                    <li><a href="cart.html">购物车</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                    <li id="user-info" style="display: none;"><span id="username"></span> <a href="#" onclick="logout()">退出</a></li>
+                    <li id="login-link"><a href="login.html">登录</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="product-list">
+            <h2>所有商品</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索商品...">
+                <button id="search-btn">搜索</button>
+                <button id="clear-search-btn">清空</button>
+            </div>
+            <div id="product-container" class="product-grid">
+                <!-- 商品将通过JavaScript动态加载 -->
+            </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>祝生活愉快</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>您的购物车</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">商品</a></li>
+                    <li><a href="cart.html" class="active">购物车</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                    <li id="user-info" style="display: none;"><span id="username"></span> <a href="#" onclick="logout()">退出</a></li>
+                    <li id="login-link"><a href="login.html">登录</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="cart-section">
+            <h2>购物车内容</h2>
+            <div id="cart-items">
+                <!-- 购物车项目将通过JavaScript动态添加 -->
+                <p id="empty-cart-message">您的购物车是空的。</p>
+            </div>
+            
+            <div class="cart-summary">
+                <h3>订单摘要</h3>
+                <p>商品总数: <span id="total-items">0</span></p>
+                <p>总计: ¥<span id="total-price">0.00</span></p>
+                <button id="checkout-btn" onclick="checkout()">结算</button>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>祝生活愉快</p>
+        </div>
+    </footer>
+    
+    <script src="js/cart.js"></script>
+</body>
+</html>

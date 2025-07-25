@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录/注册</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .switch-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .switch-form a {
+            color: #007bff;
+            cursor: pointer;
+        }
+        
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .success-message {
+            color: green;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>简易电商网站</h1>
+        <nav>
+            <a href="index.html">首页</a>
+            <a href="products.html">商品</a>
+            <a href="cart.html">购物车</a>
+            <a href="contact.html">联系我们</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="auth-container">
+            <div id="login-form">
+                <h2>用户登录</h2>
+                <div id="login-error" class="error-message" style="display: none;"></div>
+                <form id="login-form-content">
+                    <div class="form-group">
+                        <label for="login-username">用户名:</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn">登录</button>
+                </form>
+                <div class="switch-form">
+                    还没有账户？<a id="show-register">立即注册</a>
+                </div>
+            </div>
+            
+            <div id="register-form" style="display: none;">
+                <h2>用户注册</h2>
+                <div id="register-error" class="error-message" style="display: none;"></div>
+                <div id="register-success" class="success-message" style="display: none;"></div>
+                <form id="register-form-content">
+                    <div class="form-group">
+                        <label for="register-username">用户名:</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">邮箱:</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">密码:</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-key">注册密钥:</label>
+                        <input type="password" id="register-key" required>
+                    </div>
+                    <button type="submit" class="btn">注册</button>
+                </form>
+                <div class="switch-form">
+                    已有账户？<a id="show-login">立即登录</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 简易电商网站. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // 切换表单
+        document.getElementById('show-register').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        });
+        
+        document.getElementById('show-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        });
+        
+        // 登录表单提交
+        document.getElementById('login-form-content').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            fetch('api/auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 保存用户信息到localStorage
+                    localStorage.setItem('user_token', data.token);
+                    localStorage.setItem('user_id', data.user_id);
+                    localStorage.setItem('username', data.username);
+                    
+                    // 跳转到首页
+                    window.location.href = 'index.html';
+                } else {
+                    document.getElementById('login-error').textContent = data.message;
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                document.getElementById('login-error').textContent = '登录过程中发生错误';
+                document.getElementById('login-error').style.display = 'block';
+            });
+        });
+        
+        // 注册表单提交
+        document.getElementById('register-form-content').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const registrationKey = document.getElementById('register-key').value;
+            
+            fetch('api/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    password: password,
+                    registration_key: registrationKey
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('register-success').textContent = data.message;
+                    document.getElementById('register-success').style.display = 'block';
+                    document.getElementById('register-error').style.display = 'none';
+                    
+                    // 清空表单
+                    document.getElementById('register-form-content').reset();
+                    
+                    // 3秒后自动切换到登录表单
+                    setTimeout(function() {
+                        document.getElementById('register-form').style.display = 'none';
+                        document.getElementById('login-form').style.display = 'block';
+                        document.getElementById('register-success').style.display = 'none';
+                    }, 3000);
+                } else {
+                    document.getElementById('register-error').textContent = data.message;
+                    document.getElementById('register-error').style.display = 'block';
+                    document.getElementById('register-success').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                document.getElementById('register-error').textContent = '注册过程中发生错误';
+                document.getElementById('register-error').style.display = 'block';
+                document.getElementById('register-success').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
