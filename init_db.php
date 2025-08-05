@@ -2,6 +2,15 @@
 require_once 'config.php';
 
 try {
+    // 创建数据库
+    $pdo = new PDO("mysql:host=" . DB_HOST, DB_USER, DB_PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
+    $pdo->exec($sql);
+    echo "数据库创建成功<br>";
+    
+    // 重新连接到新创建的数据库
     $pdo = getDBConnection();
     
     // 创建商品表
